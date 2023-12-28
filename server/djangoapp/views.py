@@ -15,7 +15,7 @@ import json
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
+# Views by ElliottRN
 
 
 def static_view(request):
