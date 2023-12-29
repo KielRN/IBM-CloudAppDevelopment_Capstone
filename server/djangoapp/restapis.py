@@ -95,8 +95,8 @@ def get_dealer_reviews_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
 def analyze_review_sentiments(dealerreview):
-    url = ""
-    api_key = ""
+    url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/8562c122-7fa1-40a2-95d4-9f131666d1b5"
+    api_key = "EwOvapliOuOFdh-7DsfQxF65pSM_Vkvj34NnYjNASbg5"
     # params = dict()
     # params["text"] = dealerreview,
     # params["version"] = "2022-04-07"
