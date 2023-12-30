@@ -13,14 +13,20 @@ from requests.auth import HTTPBasicAuth
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
-def get_request(url, api_key=None, **kwargs):
-    print(kwargs)
+def get_request(url, **kwargs):
+    
+    response = None
+
+    api_key = kwargs.get("api_key")
     print("GET from {} ".format(url))
-    if(api_key):
-        print("API Key: "+api_key)
     try:
         # Call get method of requests library with URL and parameters
         if api_key:
+            params = dict()
+            params["text"] = kwargs["text"]
+            params["version"] = kwargs["version"]
+            params["features"] = kwargs["features"]
+            params["return_analyzed_text"] = kwargs["return_analyzed_text"]
             response = requests.get(url, params=kwargs, headers={'Content-Type': 'application/json'},
                                     auth=HTTPBasicAuth('apikey', api_key))
         else:
