@@ -110,6 +110,9 @@ def registration_request(request):
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
     context = {}
+    url ='https://eliudlamboy-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get'
+    dealerships = get_dealers_from_cf(url)
+    context['dealership_list'] = dealerships
     if request.method == "GET":
         return render(request, 'djangoapp/index.html', context)
 
