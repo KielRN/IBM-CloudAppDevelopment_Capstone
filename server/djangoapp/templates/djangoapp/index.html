@@ -1,7 +1,59 @@
-{% extends 'djangoapp/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dealership Review</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
-{% block content %}
-<div class="container mt-4">
+</head>
+
+    <body>
+    
+    <!--Add a nav bar here -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Dealership Review</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" href="about">About Us</a>
+          <a class="nav-link" href="contact">Contact Us</a>
+        </div>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+        <li>
+            <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+            <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+        </li>
+        {% else %}
+        <li>
+            <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Username" name="username" >
+                    <input type="password" class="form-control" placeholder="Password" name="psw" >
+                    <button class="btn btn-primary" type="submit">Login</button>
+                    <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                </div>
+            </form>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+      </div>
+    </div>
+  </nav>
+    <div class="container mt-4">
     <h1>Elliott's Dealer App Project</h1>
     <p class="lead">
         Welcome to Elliott's Dealer App Project:   A comprehensive platform designed to enhance your dealer experience. 
@@ -10,10 +62,8 @@
         Experience the convenience of browsing dealers, reading reviews, and making informed decisions all in one place. 
         Elliott's Dealer App is dedicated to making your automobile journey smooth and enjoyable.
     </p>
-    <!-- Additional content goes here -->
 </div>
-
-<div>
+    <!--Add a dealer table here -->
     <table class="table" id="table" data-filter-control="true">
         <thead>
             <tr>
@@ -29,6 +79,7 @@
             {% for dealer in dealership_list %}
                 <tr>
                     <td>{{dealer.id}}</td>
+                    <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
                     <td>{{dealer.city}}</td>
                     <td>{{dealer.address}}</td>
                     <td>{{dealer.zip}}</td>
@@ -37,6 +88,11 @@
             {% endfor %}
         </tbody>
     </table>
-</div>
-
-{% endblock content %}
+    <script>
+        $(function() {
+          $('#table').bootstrapTable()
+        })
+      </script>
+    </body>
+   
+</html>
